@@ -25,20 +25,16 @@ define("ADMINURL", "admin.php?page=".ADMIN);
  * Exit if accessed directly
  **/
 if ( !defined( 'ABSPATH' ) ) exit;
-/**
- * Check if WooCommerce and Contact Form 7 is active
- **/
-register_activation_hook(__FILE__, 'wc_cf7_active');
-function wc_cf7_active(){
-	if ( !in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) || !in_array( 'contact-form-7/wp-contact-form-7.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
-		// Deactivate the plugin
-		deactivate_plugins(__FILE__);
-		// Throw an error in the wordpress admin console
-		$error_message = __('This plugin requires <a target="_blank" href="https://wordpress.org/plugins/contact-form-7/">Contact Form 7</a> and <a target="_blank" href="https://wordpress.org/plugins/woocommerce/">WooCommerce</a> to be active!', 'contactform7andwoocommerce');
-		die($error_message);
-	}
-}
 
+/**
+ * Activate plugin
+ * This action is documented in includes/class-wc_cf7-activator.php
+ */
+function activate_wc_cf7() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-wc_cf7-activator.php';
+	Wc_cf7_Activator::activate();
+}
+register_activation_hook( __FILE__, 'activate_wc_cf7' );
 
 /**
  * Create a WooCommerce and Contact Form 7 Settings menu
@@ -81,7 +77,7 @@ function wc_cf7_plugin_settings_page(){
 			<?php settings_fields( 'wc-cf7-plugin-settings-group' ); ?>
 			<?php do_settings_sections( 'wc-cf7-plugin-settings-group' ); ?>
 			<input type="text" name="cf7_shortcode" value="<?php echo esc_attr( get_option('cf7_shortcode') ); ?>" />
-			<?php _e('Put here "Contact Form 7" shortcode e.g. [contact-form-7 id="10" title="Contact form 1"] and in "Edit Contact Form" put "class:product_name" e.g. [text your-subject <span style="color:red;">class:product_name</span>]', 'wc_cf7')
+			<?php _e('Put here "Contact Form 7" shortcode e.g. [contact-form-7 id="10" title="Contact form 1"] and in "Edit Contact Form" put "class:product_name" e.g. [text your-subject <span style="color:red;">class:product_name</span>]', 'wc_cf7'); ?>
 			<?php submit_button(); ?>
 		</form>
 	</div>
