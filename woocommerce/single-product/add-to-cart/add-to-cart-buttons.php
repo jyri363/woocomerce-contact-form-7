@@ -1,0 +1,5 @@
+<button type="submit" class="single_add_to_cart_button button alt"><?php echo esc_html( $product->single_add_to_cart_text() ); ?></button>
+<a class="button button_theme button_js popmake-2656" id="show_jjk" href="#" rel="nofollow"><span class="button_icon"><i class="icon-forward"></i></span><span class="button_label"><?php _e("Küsi lisainfot"); ?></span></a>
+<div id="popmake-2656" class="popmake theme-2655 active size-medium responsive custom-position" data-popmake="{"id":2656,"slug":"test","theme_id":"2655","meta":{"display":{"size":"medium","location":"center ","animation_type":"fade","animation_speed":"350","animation_origin":"center top","overlay_zindex":"1999999998","zindex":"1999999999","stackable":"true"},"close":{"button_delay":"0","overlay_click":"true"}}}" style="visibility: visible; opacity: 1; display: block; min-width: auto; top: 229px; left: 273px; z-index: 1999999999;">
+test
+</div>

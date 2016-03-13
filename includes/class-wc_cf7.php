@@ -137,8 +137,10 @@ class Wc_cf7 {
 		$plugin_public = new Wc_cf7_Public( $this->get_plugin_name(), $this->get_version() );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );		
-		// Add tab
+		// Add woocommerce tab
 		$this->loader->add_filter( 'woocommerce_product_tabs', $plugin_public, 'product_enquiry_tab' );
+		// Add woocommerce template
+		$this->loader->add_filter( 'woocommerce_locate_template', $plugin_public, 'wc_cf7_woocommerce_locate_template', 10, 3  );
 	}
 
 	/**

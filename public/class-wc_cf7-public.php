@@ -51,9 +51,43 @@ class Wc_cf7_Public {
 	public function enqueue_scripts() {
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wc_cf7-public.js', array( 'jquery' ), $this->version, false );
 	}
+	/**
+	 * Add woocommerce template
+	 */
+	public function wc_cf7_woocommerce_locate_template( $template, $template_name, $template_path ) {
+		global $woocommerce;
+
+		$_template = $template;
+
+		if ( ! $template_path ) {
+			$template_path = $woocommerce->template_url;
+		}
+		$plugin_path  = WC_CF7_PLUGIN_DIR . '/woocommerce/';
+
+		// Look within passed path within the theme - this is priority
+		$template = locate_template(
+			array(
+				$template_path . $template_name,
+				$template_name
+			)
+		);
+
+		// Modification: Get the template from this plugin, if it exists
+		if ( ! $template && file_exists( $plugin_path . $template_name ) ){
+			$template = $plugin_path . $template_name;
+		}
+
+		// Use default template
+		if ( ! $template ) {
+			$template = $_template;
+		}
+
+		// Return what we found
+		return $template;
+	}
 	
 	/**
-	 *  Adds product tabs
+	 *  Adds woocommerce product tabs
 	 **/	
 	public function product_enquiry_tab( $tabs ) {
 		if(get_option($this->plugin_name) != ""){
@@ -68,7 +102,7 @@ class Wc_cf7_Public {
 	}
 	
 	/**
-	 * Adds Contact Form 7 shortcode in product page
+	 * Adds Contact Form 7 shortcode in woocommerce product page
 	 **/
 	public function product_enquiry_tab_form() {
 		global $product;
@@ -78,9 +112,7 @@ class Wc_cf7_Public {
 		if(get_option($this->plugin_name) != ""){
 			echo "<h3>".$subject."</h3>";
 			echo do_shortcode(get_option($this->plugin_name)); //add your contact form shortcode here ..
-
 			?>
-
 			<script>
 				(function($){
 					$(".product_name").val("<?php echo $subject; ?>");
