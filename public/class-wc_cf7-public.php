@@ -48,8 +48,26 @@ class Wc_cf7_Public {
 	/**
 	 * Register the JavaScript for the public side of the site.
 	 */
-	public function enqueue_scripts() {
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wc_cf7-public.js', array( 'jquery' ), $this->version, false );
+	public function enqueue_scripts() { 
+		wp_enqueue_script( $this->plugin_name.'-popup', plugin_dir_url( __FILE__ ) . 'js/jquery.bpopup.min.js', array( 'jquery' ), $this->version, true );	
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wc_cf7-public.js', array( 'jquery' ), $this->version, true );					
+	}
+	public function add_scripts_action() {
+		global $post, $product;
+		$ID = $post->ID;
+		$price = get_post_meta( $ID, '_regular_price', true);
+		$sale = get_post_meta( $ID, '_sale_price', true);
+		$script_vars = array(
+             'title'    => get_the_title( $ID ),
+			 'product slug'	=> $product,
+             'url'      => get_permalink( $ID ),
+			 'id'		=> $ID,
+			 'price'	=> $price,
+			 'sale'		=> $sale 
+         );
+		wp_enqueue_script( 'jquery' );
+		wp_enqueue_script( $this->plugin_name );
+		wp_localize_script( $this->plugin_name, 'script_vars', $script_vars );
 	}
 	/**
 	 * Add woocommerce template
@@ -90,7 +108,10 @@ class Wc_cf7_Public {
 	 *  Adds woocommerce product tabs
 	 **/	
 	public function product_enquiry_tab( $tabs ) {
-		if(get_option($this->plugin_name) != ""){
+		$options = get_option($this->plugin_name);	
+		$jjk_cf7 = $options['jjk_cf7'];
+		$jjk_position_cf7 = $options['jjk_position_cf7'];
+		if($jjk_cf7 != "" && $jjk_position_cf7 != "before"){
 			$tabs['test_tab'] = array(
 				'title'     => __( 'Enquire about Product', 'woocommerce' ),
 				'priority'  => 50,
@@ -106,20 +127,23 @@ class Wc_cf7_Public {
 	 **/
 	public function product_enquiry_tab_form() {
 		global $product;
+		$options = get_option($this->plugin_name);	
+		$jjk_cf7 = $options['jjk_cf7'];
 		//If you want to have product ID also
 		//$product_id = $product->id;
-		$subject    =   $product->post->post_title;
-		if(get_option($this->plugin_name) != ""){
-			echo "<h3>".$subject."</h3>";
-			echo do_shortcode(get_option($this->plugin_name)); //add your contact form shortcode here ..
-			?>
+		//$subject    =   $product->post->post_title;
+		/*?>
 			<script>
 				(function($){
-					$(".product_name").val("<?php echo $subject; ?>");
+					$(".jjk_product_name").val("aa123");
 				})(jQuery);
 			</script>   
-			<?php 
+			<?php */
+		if($jjk_cf7 != ""){
+			//echo "<h3>".$subject."</h3>";
+			echo do_shortcode($jjk_cf7); //add your contact form shortcode here ..
+			
 		}
 	}
-
+	
 }

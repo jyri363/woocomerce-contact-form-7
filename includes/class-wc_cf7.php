@@ -124,7 +124,8 @@ class Wc_cf7 {
 		// Add Settings link to the plugin
 		$this->loader->add_filter( 'plugin_action_links_' . WC_CF7_PLUGIN_BASENAME, $plugin_admin, 'add_action_links' );
 		// Save/Update our plugin options
-		$this->loader->add_action('admin_init', $plugin_admin, 'register_wc_cf7_plugin_settings');
+		$this->loader->add_action('admin_init', $plugin_admin, 'options_update');
+		$this->loader->add_filter( 'woocommerce_product_tabs', $plugin_admin,'woo_rename_tabs', 98 );
 	}
 
 	/**
@@ -136,9 +137,12 @@ class Wc_cf7 {
 	private function define_public_hooks() {
 		$plugin_public = new Wc_cf7_Public( $this->get_plugin_name(), $this->get_version() );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );		
+		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+		// Add woocommerce script vars
+		$this->loader->add_action('woocommerce_before_main_content', $plugin_public, 'add_scripts_action');		
 		// Add woocommerce tab
 		$this->loader->add_filter( 'woocommerce_product_tabs', $plugin_public, 'product_enquiry_tab' );
+		//$this->loader->add_filter( 'woocommerce_product_tabs', $plugin_public,'woo_rename_tabs', 98 );
 		// Add woocommerce template
 		$this->loader->add_filter( 'woocommerce_locate_template', $plugin_public, 'wc_cf7_woocommerce_locate_template', 10, 3  );
 	}

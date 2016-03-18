@@ -73,11 +73,21 @@ class Wc_cf7_Admin {
 	}
 	
 	/**
-	 * Register settings
+	* validates
+	**/
+	public function validate($value) {
+		// All inputs        
+		$valid = array();
+		$valid['jjk_cf7'] = $value['jjk_cf7'];
+		$valid['jjk_position_cf7'] = $value['jjk_position_cf7'];
+		return $valid;
+	}
+	/**
+	 * Register settings/options
 	 */
-	public function register_wc_cf7_plugin_settings() {
+	public function options_update() {
 		//register our settings
-		register_setting( $this->plugin_name, $this->plugin_name );
+		register_setting($this->plugin_name, $this->plugin_name, array($this, 'validate'));
 	}
 	/**
 	 * Display a WooCommerce and Contact Form 7 admin Settings page
@@ -85,5 +95,15 @@ class Wc_cf7_Admin {
 	function wc_cf7_plugin_settings_page(){ 
 		include_once( 'partials/wc_cf7-admin-display.php' );
 	}
-
+	/**/
+	function woo_rename_tabs( $tabs ) {
+		global $product;
+		$subject    =   $product->post->post_title;
+		$options = get_option($this->plugin_name);	
+		$jjk_position_cf7 = $options['jjk_position_cf7'];
+		if($jjk_position_cf7 != "before"){
+			$tabs['test_tab']['title'] = __( $subject );			// Rename the tab
+		}
+		return $tabs;
+	}
 }
