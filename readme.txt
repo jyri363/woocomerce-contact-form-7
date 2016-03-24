@@ -1,10 +1,12 @@
 === WooCommerce and Contact Form 7 ===
 Tags: woocommerce, contact form 7
-Stable tag: 0.1
+Stable tag: 1.0.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 == Description ==
+
+Additional Tab or Button Product Inquiry.
 
 == Installation ==
 
@@ -17,5 +19,5 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 == Changelog ==
 
-= 0.1 =
+= 1.0.0 =
 * first version

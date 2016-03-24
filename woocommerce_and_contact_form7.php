@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WooCommerce and Contact Form 7
  * Plugin URI: http://imwebsolutions.eu
- * Description: Additional Tab Product Inquiry.
+ * Description: Additional Tab or Button Product Inquiry.
  * Author: Jüri-Joonas Kerem <jyri363@gmail.com>
  * Author URI: http://imwebsolutions.eu
  * Version: 1.0.0
@@ -39,8 +39,18 @@ function activate_wc_cf7() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-wc_cf7-activator.php';
 	Wc_cf7_Activator::activate();
 }
-register_activation_hook( __FILE__, 'activate_wc_cf7' );
 
+/**
+ * The code that runs during plugin deactivation.
+ * This action is documented in includes/class-wc_cf7-deactivator.php
+ */
+function deactivate_wc_cf7() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-wc_cf7-deactivator.php';
+	Wc_cf7_Deactivator::deactivate();
+}
+
+register_activation_hook( __FILE__, 'activate_wc_cf7' );
+register_deactivation_hook( __FILE__, 'deactivate_wc_cf7' );
 
 /**
  * The core plugin class that is used to define internationalization,

@@ -24,7 +24,35 @@ class Wc_cf7_Public {
 	 * @var      string    $version    The current version of this plugin.
 	 */
 	private $version;
-
+	
+	/**
+	 * Display cf7.
+	 *
+	 * @var string
+	 */
+	public $jjk_cf7;
+	
+	/**
+	 * Position cf7
+	 *
+	 * @var string
+	 */
+	public $jjk_position_cf7;
+	
+	/**
+	 * Display css.
+	 *
+	 * @var string
+	 */
+	public $jjk_css;
+	
+	/**
+	 * Display js
+	 *
+	 * @var string
+	 */
+	public $jjk_js;
+	
 	/**
 	 * Initialize the class and set its properties.
 	 *
@@ -32,10 +60,12 @@ class Wc_cf7_Public {
 	 * @param      string    $version    The version of this plugin.
 	 */
 	public function __construct( $plugin_name, $version ) {
-
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
-
+		$this->jjk_cf7 = get_option($this->plugin_name)['jjk_cf7'];
+		$this->jjk_position_cf7 = get_option($this->plugin_name)['jjk_position_cf7'];
+		$this->jjk_css = get_option($this->plugin_name.'_css_js')['jjk_css'];
+		$this->jjk_js = get_option($this->plugin_name.'_css_js')['jjk_js'];
 	}
 
 	/**
@@ -59,7 +89,7 @@ class Wc_cf7_Public {
 		$sale = get_post_meta( $ID, '_sale_price', true);
 		$script_vars = array(
              'title'    => get_the_title( $ID ),
-			 'product slug'	=> $product,
+			 'product_slug'	=> $product,
              'url'      => get_permalink( $ID ),
 			 'id'		=> $ID,
 			 'price'	=> $price,
@@ -69,6 +99,25 @@ class Wc_cf7_Public {
 		wp_enqueue_script( $this->plugin_name );
 		wp_localize_script( $this->plugin_name, 'script_vars', $script_vars );
 	}
+	
+	public function hook_css_box(){
+		?>		
+        <style type="text/css">
+			<?php echo $this->jjk_css;?>
+		</style>
+        <?php
+	}	
+
+	public function hook_js_box(){
+		?>
+        <script type="text/javascript">
+			/* <![CDATA[ */
+			<?php echo $this->jjk_js;?>
+			/* ]]> */
+		</script>
+        <?php
+	}
+	
 	/**
 	 * Add woocommerce template
 	 */
@@ -108,10 +157,7 @@ class Wc_cf7_Public {
 	 *  Adds woocommerce product tabs
 	 **/	
 	public function product_enquiry_tab( $tabs ) {
-		$options = get_option($this->plugin_name);	
-		$jjk_cf7 = $options['jjk_cf7'];
-		$jjk_position_cf7 = $options['jjk_position_cf7'];
-		if($jjk_cf7 != "" && $jjk_position_cf7 != "before"){
+		if($this->jjk_cf7 != "" && $this->jjk_position_cf7 != "before"){
 			$tabs['test_tab'] = array(
 				'title'     => __( 'Enquire about Product', 'woocommerce' ),
 				'priority'  => 50,
@@ -127,23 +173,45 @@ class Wc_cf7_Public {
 	 **/
 	public function product_enquiry_tab_form() {
 		global $product;
-		$options = get_option($this->plugin_name);	
-		$jjk_cf7 = $options['jjk_cf7'];
-		//If you want to have product ID also
-		//$product_id = $product->id;
-		//$subject    =   $product->post->post_title;
-		/*?>
-			<script>
-				(function($){
-					$(".jjk_product_name").val("aa123");
-				})(jQuery);
-			</script>   
-			<?php */
-		if($jjk_cf7 != ""){
+		if($this->jjk_cf7 != ""){
 			//echo "<h3>".$subject."</h3>";
-			echo do_shortcode($jjk_cf7); //add your contact form shortcode here ..
+			echo do_shortcode($this->jjk_cf7); //add your contact form shortcode here ..
 			
 		}
 	}
-	
+	/*
+	* Adds Contact Form 7 button
+	*/
+	public function add_new_button() {
+		global $product;
+		if($this->jjk_cf7 != "" && $this->jjk_position_cf7 == "before"): ?>
+			<a class="button button_theme button_js popmake-2656" id="show_jjk" href="#" rel="nofollow"><span class="button_icon"><i class="icon-forward"></i></span><span class="button_label"><?php _e("Ask more"); ?></span></a>
+			<!-- Element to pop up -->
+			<div id="element_to_pop_up">
+				<span class="button b-close">x</span>
+				<?php echo do_shortcode($this->jjk_cf7); ?>
+			</div>
+		<?php endif; 
+	}
+	/*
+	* Remove Add to Cart button
+	*/
+	public function remove_add_to_cart_button(){
+		remove_action( 'woocommerce_after_shop_loop_item', 'woocommerce_template_loop_add_to_cart', 10 );
+		remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30 );
+		remove_action( 'woocommerce_simple_add_to_cart', 'woocommerce_simple_add_to_cart', 30 );
+		remove_action( 'woocommerce_grouped_add_to_cart', 'woocommerce_grouped_add_to_cart', 30 );	
+	}
+	/*
+	* Replace Add to Cart button
+	*/
+	public function replace_add_to_cart() {
+		global $product;
+		$link = $product->get_permalink();
+		echo do_shortcode('<a href="'.$link.'" class="button addtocartbutton">View Product</a>');
+	}
+	// test is_purchasable
+	public function my_woocommerce_is_purchasable($is_purchasable, $product) {
+			return ($product->id == 37 ? false : $is_purchasable);
+	}
 }
