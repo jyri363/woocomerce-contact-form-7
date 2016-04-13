@@ -23,6 +23,6 @@
 		<br>
 		<h2><?php esc_attr_e( 'Custom JS', 'wp_admin_style' ); ?></h2>
 		<textarea id="jjk_js" name="<?php echo $this->plugin_name.'_css_js'; ?>[jjk_js]" cols="80" rows="10" class="large-text"><?php echo $jjk_js; ?></textarea>
-		<?php submit_button(); submit_button( __('Reset'), 'secondary', 'reset', false); ?>		
+		<?php submit_button(); submit_button( __('Reset', 'wc_cf7_admin'), 'secondary', 'reset', false); ?>		
 	</form>	
 </div>

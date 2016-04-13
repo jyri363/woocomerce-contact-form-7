@@ -1,9 +1,9 @@
 === WooCommerce and Contact Form 7 ===
-Contributors: (this should be a list of wordpress.org userid's)
-Donate link: http://example.com/
-Tags: woocommerce, contact form 7
-Stable tag: 1.0.0
-License: GNU General Public License v3.0
+Contributors: J.-J. Kerem
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=Z5Q67TUQKDEL6
+Tags: WooCommerce, Contact Form 7, Product Enquiry, Product Enquiry for WooCommerce and Contact Form 7, eCommerce Product Enquiry, Ask Question about a Product, WooCommerce Plugin, Contact Form 7 Plugin, Inquiry
+Stable tag: trunk
+License: GNU General Public License v3.0 +
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 == Description ==
@@ -20,6 +20,8 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.html
 == Changelog ==
 
 = 1.0.3 =
+* Add rename field
+* Add reset button
 
 = 1.0.0 =
 * first version

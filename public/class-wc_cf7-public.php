@@ -186,10 +186,10 @@ class Wc_cf7_Public {
 	public function add_new_button() {
 		global $product;
 		if($this->jjk_cf7 != "" && $this->jjk_position_cf7 == "before"): ?>
-			<a class="button button_theme button_js popup" id="show_jjk" href="#" rel="nofollow"><span class="button_icon"><i class="icon-forward"></i></span><span class="button_label"><?php _e($this->jjk_rename); ?></span></a>
+			<a class="button button_theme button_js popup jjk_popup" id="jjk_show" href="#" rel="nofollow"><span class="button_icon"><i class="icon-forward"></i></span><span class="button_label"><?php _e($this->jjk_rename); ?></span></a>
 			<!-- Element to pop up -->
-			<div id="element_to_pop_up">
-				<span class="button b-close">x</span>
+			<div id="jjk_element_to_pop_up">
+				<span class="jjk_button jjk_b-close">x</span>
 				<?php echo do_shortcode($this->jjk_cf7); ?>
 			</div>
 		<?php endif; 

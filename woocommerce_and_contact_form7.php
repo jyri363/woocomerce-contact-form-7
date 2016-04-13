@@ -1,14 +1,14 @@
 <?php
 /**
  * Plugin Name: WooCommerce and Contact Form 7
- * Plugin URI: http://imwebsolutions.eu
- * Description: Additional Tab Product Inquiry.
+ * Plugin URI: http://wpeesti.ee
+ * Description: Additional Tab or Button Product Inquiry.
  * Author: Jüri-Joonas Kerem <jyri363@gmail.com>
- * Author URI: http://imwebsolutions.eu
- * Version: 1.0.0
+ * Author URI: http://wpeesti.ee
+ * Version: 1.0.3
  * Tested up to: 4.4.2
  *
- * License: GNU General Public License v3.0
+ * License: GNU General Public License v3.0+
  * License URI: http://www.gnu.org/licenses/gpl-3.0.html
  * Text Domain: woocommerce-contact-form-7
  * Domain Path: /languages
@@ -24,7 +24,7 @@
  **/
 if ( !defined( 'ABSPATH' ) ) exit;
  
-define( 'WC_CF7_VERSION', '1.0.0' );
+define( 'WC_CF7_VERSION', '1.0.3' );
 define( 'WC_CF7_PLUGIN', __FILE__ );
 define( 'WC_CF7_PLUGIN_BASENAME', plugin_basename( WC_CF7_PLUGIN ) );
 define( 'WC_CF7_PLUGIN_NAME', trim( dirname( WC_CF7_PLUGIN_BASENAME ), '/' ) );
