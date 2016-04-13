@@ -63,6 +63,7 @@ class Wc_cf7_Public {
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
 		$this->jjk_cf7 = get_option($this->plugin_name)['jjk_cf7'];
+		$this->jjk_rename = get_option($this->plugin_name)['jjk_rename'];
 		$this->jjk_position_cf7 = get_option($this->plugin_name)['jjk_position_cf7'];
 		$this->jjk_css = get_option($this->plugin_name.'_css_js')['jjk_css'];
 		$this->jjk_js = get_option($this->plugin_name.'_css_js')['jjk_js'];
@@ -159,7 +160,7 @@ class Wc_cf7_Public {
 	public function product_enquiry_tab( $tabs ) {
 		if($this->jjk_cf7 != "" && $this->jjk_position_cf7 != "before"){
 			$tabs['test_tab'] = array(
-				'title'     => __( 'Enquire about Product', 'woocommerce' ),
+				'title'     => __( 'Ask more', 'woocommerce' ),
 				'priority'  => 50,
 				'callback'  => array($this, 'product_enquiry_tab_form')
 			);
@@ -185,7 +186,7 @@ class Wc_cf7_Public {
 	public function add_new_button() {
 		global $product;
 		if($this->jjk_cf7 != "" && $this->jjk_position_cf7 == "before"): ?>
-			<a class="button button_theme button_js popmake-2656" id="show_jjk" href="#" rel="nofollow"><span class="button_icon"><i class="icon-forward"></i></span><span class="button_label"><?php _e("Ask more"); ?></span></a>
+			<a class="button button_theme button_js popup" id="show_jjk" href="#" rel="nofollow"><span class="button_icon"><i class="icon-forward"></i></span><span class="button_label"><?php _e($this->jjk_rename); ?></span></a>
 			<!-- Element to pop up -->
 			<div id="element_to_pop_up">
 				<span class="button b-close">x</span>
@@ -203,14 +204,14 @@ class Wc_cf7_Public {
 		remove_action( 'woocommerce_grouped_add_to_cart', 'woocommerce_grouped_add_to_cart', 30 );	
 	}
 	/*
-	* Replace Add to Cart button
+	* test - Replace Add to Cart button
 	*/
 	public function replace_add_to_cart() {
 		global $product;
 		$link = $product->get_permalink();
 		echo do_shortcode('<a href="'.$link.'" class="button addtocartbutton">View Product</a>');
 	}
-	// test is_purchasable
+	// test - is_purchasable
 	public function my_woocommerce_is_purchasable($is_purchasable, $product) {
 			return ($product->id == 37 ? false : $is_purchasable);
 	}

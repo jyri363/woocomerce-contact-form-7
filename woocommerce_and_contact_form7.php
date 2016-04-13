@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WooCommerce and Contact Form 7
  * Plugin URI: http://imwebsolutions.eu
- * Description: Additional Tab or Button Product Inquiry.
+ * Description: Additional Tab Product Inquiry.
  * Author: Jüri-Joonas Kerem <jyri363@gmail.com>
  * Author URI: http://imwebsolutions.eu
  * Version: 1.0.0
@@ -10,7 +10,7 @@
  *
  * License: GNU General Public License v3.0
  * License URI: http://www.gnu.org/licenses/gpl-3.0.html
- * Text Domain: woocomerce-contact-form-7
+ * Text Domain: woocommerce-contact-form-7
  * Domain Path: /languages
  *
  * @package     Wc_cf7

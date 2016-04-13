@@ -99,6 +99,9 @@ class Wc_cf7_Admin {
 		// All inputs top menu       
 		$valid = array();
 		$valid['jjk_cf7'] = $value['jjk_cf7'];
+		if(!empty($value['jjk_rename'])){
+			$valid['jjk_rename'] = $value['jjk_rename'];
+		} else { $valid['jjk_rename'] = 'Ask more'; }
 		$valid['jjk_position_cf7'] = $value['jjk_position_cf7'];
 		$valid['jjk_remove_add_to_cart'] = (isset($value['jjk_remove_add_to_cart']) && !empty($value['jjk_remove_add_to_cart'])) ? 1 : 0;
 		return $valid;
@@ -109,14 +112,21 @@ class Wc_cf7_Admin {
 	public function options_update() {
 		//register our settings top menu 
 		register_setting($this->plugin_name, $this->plugin_name, array($this, 'validate'));
-		//register_setting($this->plugin_name.'_css_js', $this->plugin_name.'_css_js', array($this, 'validate'));
 	}
 	/**
 	* validates sub menu  
 	**/
 	public function validate_sub($value) {
-		// All inputs sub menu       
+		// All inputs sub menu 
 		$valid = array();
+		// if isset 'reset'
+		if (isset($_POST['reset'])) {
+			include_once( 'partials/wc_cf7-admin-css_js_default.php' );
+			$valid['jjk_css'] = jjk_default_css();
+			$valid['jjk_js'] = jjk_default_js();
+			return $valid; //Default settings
+		}	
+		// if isset 'submit'		
 		$valid['jjk_css'] = $value['jjk_css'];
 		$valid['jjk_js'] = $value['jjk_js'];
 		return $valid;
@@ -131,12 +141,12 @@ class Wc_cf7_Admin {
 	/**/
 	public function woo_rename_tabs( $tabs ) {
 		global $product;
-		$subject    =   $product->post->post_title;
 		$options = get_option($this->plugin_name);	
+		$jjk_rename = $options['jjk_rename'];
 		$jjk_position_cf7 = $options['jjk_position_cf7'];
 		$jjk_cf7 = $options['jjk_cf7'];
 		if($jjk_position_cf7 != "before" && $jjk_cf7 != ""){
-			$tabs['test_tab']['title'] = __( $subject );			
+			$tabs['test_tab']['title'] = __( $jjk_rename );			
 		}
 		return $tabs;			// Rename the tab
 	}
