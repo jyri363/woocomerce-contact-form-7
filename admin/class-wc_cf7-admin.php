@@ -113,6 +113,20 @@ class Wc_cf7_Admin {
 		//register our settings top menu 
 		register_setting($this->plugin_name, $this->plugin_name, array($this, 'validate'));
 	}
+	
+	/**
+	 * Provides default values for the Display Sub Options.
+	 *
+	 * @return array
+	 */
+	public function default_display_sub_options() {
+		require_once( 'partials/wc_cf7-css_js_default.php' );
+		$defaults = array(
+			'jjk_css'		=>	jjk_default_css(),
+			'jjk_js'		=>	jjk_default_js(),
+		);
+		return $defaults;
+	}
 	/**
 	* validates sub menu  
 	**/
@@ -121,12 +135,9 @@ class Wc_cf7_Admin {
 		$valid = array();
 		// if isset 'reset'
 		if (isset($_POST['reset'])) {
-			include_once( 'partials/wc_cf7-admin-css_js_default.php' );
-			$valid['jjk_css'] = jjk_default_css();
-			$valid['jjk_js'] = jjk_default_js();
-			return $valid; //Default settings
+			return $this->default_display_sub_options(); //Default settings
 		}	
-		// if isset 'submit'		
+		// if isset 'submit'
 		$valid['jjk_css'] = $value['jjk_css'];
 		$valid['jjk_js'] = $value['jjk_js'];
 		return $valid;

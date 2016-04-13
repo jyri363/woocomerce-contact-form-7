@@ -33,7 +33,7 @@
 			<!-- Contact Form 7 shortcode -->
 			<h2><?php esc_attr_e( 'Contact Form 7 shortcode', 'wc_cf7_admin' ); ?></h2>
 			<input type="text" name="<?php echo $this->plugin_name; ?>[jjk_cf7]" value='<?php if(!empty($jjk_cf7)) echo $jjk_cf7; ?>' />
-			<span class="description"><?php esc_attr_e( 'Put here "Contact Form 7" shortcode e.g. [contact-form-7 id="10" title="Contact form 1"] and in "Edit Contact Form" put "class:product_name" e.g. [text your-subject class:product_name]', 'wc_cf7_admin' ); ?></span><br>
+			<span class="description"><?php esc_attr_e( 'Put here "Contact Form 7" shortcode e.g. [contact-form-7 id="10" title="Contact form 1"] and in "Edit Contact Form" put "class:product_name" e.g. [text your-subject class:jjk_product_name]', 'wc_cf7_admin' ); ?></span><br>
 			<!-- Rename -->
 			<h2><?php esc_attr_e( 'Rename', 'wc_cf7_admin' ); ?></h2>
 			<input type="text" name="<?php echo $this->plugin_name; ?>[jjk_rename]" value='<?php if(!empty($jjk_rename)) echo $jjk_rename; ?>' />

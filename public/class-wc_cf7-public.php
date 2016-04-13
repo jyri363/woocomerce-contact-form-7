@@ -104,7 +104,9 @@ class Wc_cf7_Public {
 	public function hook_css_box(){
 		?>		
         <style type="text/css">
-			<?php echo $this->jjk_css;?>
+			<?php 
+			if ($this->jjk_css != '') echo $this->jjk_css;		
+			?>
 		</style>
         <?php
 	}	
@@ -113,7 +115,9 @@ class Wc_cf7_Public {
 		?>
         <script type="text/javascript">
 			/* <![CDATA[ */
-			<?php echo $this->jjk_js;?>
+			<?php 
+			if ($this->jjk_js != '') echo $this->jjk_js;
+			?>
 			/* ]]> */
 		</script>
         <?php

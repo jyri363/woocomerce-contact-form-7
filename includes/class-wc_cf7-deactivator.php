@@ -11,8 +11,8 @@ class Wc_cf7_Deactivator {
 	 * Short Description
 	 */
 	public static function deactivate() {
-		$option_name = WC_CF7_PLUGIN_NAME;
-		delete_option( $option_name );
+		//delete_option( WC_CF7_PLUGIN_NAME );
+		//delete_option( WC_CF7_PLUGIN_NAME.'_css_js' );
 	}
 
 }
