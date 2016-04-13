@@ -1,3 +1,6 @@
+<?php 
+	// puplic css setting
+?>
 .jjk_element_to_pop_up { 
 	background-color:#fff;
 	border-radius:15px;
@@ -8,19 +11,19 @@
 	min-height: 180px;
 }
 .b-close {
-    background-color: #2b91af;
-    color: #fff;
-    cursor: pointer;
-    display: inline-block;
-    border-radius: 7px 7px 7px 7px;
-    box-shadow: none;
-    font: bold 131% sans-serif;
-    padding: 0 6px 2px;
-    position: absolute;
-    right: -7px;
-    top: -7px;
-    text-align: center;
-    text-decoration: none;
+	background-color: #2b91af;
+	color: #fff;
+	cursor: pointer;
+	display: inline-block;
+	border-radius: 7px 7px 7px 7px;
+	box-shadow: none;
+	font: bold 131% sans-serif;
+	padding: 0 6px 2px;
+	position: absolute;
+	right: -7px;
+	top: -7px;
+	text-align: center;
+	text-decoration: none;
 }
 /* */
 @media screen and (max-width : 1024px) {

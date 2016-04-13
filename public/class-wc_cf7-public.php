@@ -46,12 +46,6 @@ class Wc_cf7_Public {
 	 */
 	public $jjk_css;
 	
-	/**
-	 * Display js
-	 *
-	 * @var string
-	 */
-	public $jjk_js;
 	
 	/**
 	 * Initialize the class and set its properties.
@@ -65,23 +59,37 @@ class Wc_cf7_Public {
 		$this->jjk_cf7 = get_option($this->plugin_name)['jjk_cf7'];
 		$this->jjk_rename = get_option($this->plugin_name)['jjk_rename'];
 		$this->jjk_position_cf7 = get_option($this->plugin_name)['jjk_position_cf7'];
-		$this->jjk_css = get_option($this->plugin_name.'_css_js')['jjk_css'];
-		$this->jjk_js = get_option($this->plugin_name.'_css_js')['jjk_js'];
+		$this->jjk_add_from_button_loops = get_option($this->plugin_name)['jjk_add_from_button_loops'];
+		$this->jjk_css = get_option($this->plugin_name.'_css')['jjk_css'];
+		$this->jjk_button_op = get_option($this->plugin_name.'_button');
+		$this->jjk_button = $this->jjk_button_op['jjk_button'];
+		$this->jjk_popup = $this->jjk_button_op['jjk_popup'];
+		$this->jjk_button_color = $this->jjk_button_op['jjk_button_color'];
+		$this->jjk_button_color_bg = $this->jjk_button_op['jjk_button_background_color'];
+		$this->jjk_popup_color = $this->jjk_button_op['jjk_popup_color'];
+		$this->jjk_popup_color_bg = $this->jjk_button_op['jjk_popup_background_color'];		
 	}
 
 	/**
 	 * Register the stylesheets for the public side of the site.
 	 */
 	public function enqueue_styles() {
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/wc_cf7-public.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/wc_cf7-default-public.css', array(), $this->version, 'all' );
+		//wp_enqueue_style( $this->plugin_name.'-button', plugin_dir_url( __FILE__ ) . 'css/wc_cf7-public-button.php', false, $this->version, 'all' );
+		//wp_enqueue_style( $this->plugin_name.'-popup', plugin_dir_url( __FILE__ ) . 'css/wc_cf7-public-popup.php', array(), $this->version, 'all' );
 	}
 
 	/**
 	 * Register the JavaScript for the public side of the site.
 	 */
 	public function enqueue_scripts() { 
-		wp_enqueue_script( $this->plugin_name.'-popup', plugin_dir_url( __FILE__ ) . 'js/jquery.bpopup.min.js', array( 'jquery' ), $this->version, true );	
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wc_cf7-public.js', array( 'jquery' ), $this->version, true );					
+			
+		if($this->jjk_position_cf7 == "button"){
+			wp_enqueue_script( $this->plugin_name.'-popup', plugin_dir_url( __FILE__ ) . 'js/jquery.bpopup.min.js', array( 'jquery' ), $this->version, true );
+			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wc_cf7-public-button.js', array( 'jquery' ), $this->version, true );
+		} else if ($this->jjk_position_cf7 == "tab"){
+			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wc_cf7-public-tab.js', array( 'jquery' ), $this->version, true );
+		}
 	}
 	public function add_scripts_action() {
 		global $post, $product;
@@ -101,11 +109,28 @@ class Wc_cf7_Public {
 		wp_localize_script( $this->plugin_name, 'script_vars', $script_vars );
 	}
 	
-	public function hook_css_box(){
+	public function hook_css_box(){	
 		?>		
         <style type="text/css">
+			/* jjk */
 			<?php 
-			if ($this->jjk_css != '') echo $this->jjk_css;		
+			if($this->jjk_button) {
+				?>
+				.jjk_popup {
+					color: <?php echo $this->jjk_button_color; ?> !important;
+					background-color: <?php echo $this->jjk_button_color_bg; ?> !important;
+				}
+				<?php 
+			}
+			if($this->jjk_popup) {
+				?>
+				.jjk_element_to_pop_up { 
+					color: <?php echo $this->jjk_popup_color; ?> !important;
+					background-color: <?php echo $this->jjk_popup_color_bg; ?> !important;
+				}
+				<?php 
+			}
+			echo $this->jjk_css;
 			?>
 		</style>
         <?php
@@ -116,7 +141,7 @@ class Wc_cf7_Public {
         <script type="text/javascript">
 			/* <![CDATA[ */
 			<?php 
-			if ($this->jjk_js != '') echo $this->jjk_js;
+			
 			?>
 			/* ]]> */
 		</script>
@@ -162,8 +187,8 @@ class Wc_cf7_Public {
 	 *  Adds woocommerce product tabs
 	 **/	
 	public function product_enquiry_tab( $tabs ) {
-		if($this->jjk_cf7 != "" && $this->jjk_position_cf7 != "before"){
-			$tabs['test_tab'] = array(
+		if($this->jjk_cf7 != "" && $this->jjk_position_cf7 == "tab"){
+			$tabs['jjk_tab'] = array(
 				'title'     => __( 'Ask more', 'woocommerce' ),
 				'priority'  => 50,
 				'callback'  => array($this, 'product_enquiry_tab_form')
@@ -178,10 +203,9 @@ class Wc_cf7_Public {
 	 **/
 	public function product_enquiry_tab_form() {
 		global $product;
-		if($this->jjk_cf7 != ""){
-			//echo "<h3>".$subject."</h3>";
-			echo do_shortcode($this->jjk_cf7); //add your contact form shortcode here ..
-			
+		if($this->jjk_cf7 != ""){ ?>
+			<?php echo do_shortcode($this->jjk_cf7) ?>
+			<?php 			
 		}
 	}
 	/*
@@ -189,11 +213,11 @@ class Wc_cf7_Public {
 	*/
 	public function add_new_button() {
 		global $product;
-		if($this->jjk_cf7 != "" && $this->jjk_position_cf7 == "before"): ?>
-			<a class="button button_theme button_js popup jjk_popup" id="jjk_show" href="#" rel="nofollow"><span class="button_icon"><i class="icon-forward"></i></span><span class="button_label"><?php _e($this->jjk_rename); ?></span></a>
+		if($this->jjk_cf7 != "" && $this->jjk_position_cf7 == "button"): ?>
+			<a class="jjk_data button button_theme button_js popup jjk_popup jjk_show" href="#" rel="nofollow" dataTitle="<?php the_title(); ?>"><span class="button_icon"><i class="icon-forward"></i></span><span class="button_label"><?php _e($this->jjk_rename); ?></span></a>
 			<!-- Element to pop up -->
-			<div id="jjk_element_to_pop_up">
-				<span class="jjk_button jjk_b-close">x</span>
+			<div class="jjk_element_to_pop_up">
+				<span class="jjk_button b-close">x</span>
 				<?php echo do_shortcode($this->jjk_cf7); ?>
 			</div>
 		<?php endif; 
@@ -219,4 +243,24 @@ class Wc_cf7_Public {
 	public function my_woocommerce_is_purchasable($is_purchasable, $product) {
 			return ($product->id == 37 ? false : $is_purchasable);
 	}
+	// test - is_purchasable
+	public function product_3213() {
+		global $product;
+		//If you want to have product ID also
+		//$product_id = $product->id;
+		$subject    =   $product->post->post_title;
+
+		echo "<h3>".$subject."</h3>";
+		echo do_shortcode('[contact-form-7 id="10" title="Contact form 1"]'); //add your contact form shortcode here ..
+
+		?>
+
+		<script>
+		(function($){
+			$(".product_name").val("<?php echo $subject; ?>");
+		})(jQuery);
+		</script>   
+    <?php   
+	}
+    
 }

@@ -10,7 +10,7 @@ function jjk_default_css() {
 	min-width:1000px;
 	min-height: 180px;
 }
-.jjk_b-close {
+.b-close {
 	background-color: #2b91af;
 	color: #fff;
 	cursor: pointer;
@@ -45,7 +45,7 @@ function jjk_default_css() {
 		min-width:200px;
 			left: 1px !important;
 	}
-	.jjk_b-close {
+	.b-close {
 		right:0px;
 		top:0px;
 	}
@@ -54,10 +54,12 @@ function jjk_default_css() {
 
 }
 function jjk_default_js() {
+	global $post;
+	$ID = $post->ID;
 	$js = "
 (function( $ ) {
 	'use strict';
-	$('.jjk_product_name').val(script_vars.title); 
+	$('.jjk_product_name').val('".get_the_title( $ID )." ".$ID."'); 
 	$(function() {
 		$('#jjk_show').bind('click', function(e) {
 			e.preventDefault();

@@ -125,6 +125,7 @@ class Wc_cf7 {
 		$this->loader->add_filter( 'plugin_action_links_' . WC_CF7_PLUGIN_BASENAME, $plugin_admin, 'add_action_links' );
 		// Save/Update our plugin options
 		$this->loader->add_action('admin_init', $plugin_admin, 'options_update');
+		$this->loader->add_action('admin_init', $plugin_admin, 'options_update_button');
 		$this->loader->add_action('admin_init', $plugin_admin, 'options_update_sub');
 		if(get_option($this->plugin_name)['jjk_cf7'] != "")
 			$this->loader->add_filter( 'woocommerce_product_tabs', $plugin_admin,'woo_rename_tabs', 98 );
@@ -142,17 +143,17 @@ class Wc_cf7 {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 		
 		
-		if(get_option($this->plugin_name.'_css_js')['jjk_css'] != ''){
+		//if(get_option($this->plugin_name.'_css')['jjk_css'] != ''){
 			$this->loader->add_action('wp_head',$plugin_public,'hook_css_box');
-		} else {
+		//} else {
 			
-		}
+		//}
 
-		if(get_option($this->plugin_name.'_css_js')['jjk_js'] != ''){
+		//if(get_option($this->plugin_name.'_css_js')['jjk_js'] != ''){
 			$this->loader->add_action('wp_footer',$plugin_public,'hook_js_box',30);
-		} else {
+		//} else {
 			
-		}
+		//}
 		
 		// Add woocommerce script vars
 		$this->loader->add_action('woocommerce_before_main_content', $plugin_public, 'add_scripts_action');	
@@ -163,6 +164,8 @@ class Wc_cf7 {
 		} else {
 			$this->loader->add_filter('woocommerce_after_add_to_cart_button', $plugin_public, 'add_new_button', 30 );
 		}
+		if(get_option($this->plugin_name)['jjk_add_from_button_loops']) $this->loader->add_action('woocommerce_after_shop_loop_item',$plugin_public,'add_new_button');
+		//$this->loader->add_action('woocommerce_after_shop_loop_item',$plugin_public,'product_3213');
 		//$this->loader->add_filter('woocommerce_is_purchasable', $plugin_public, 'my_woocommerce_is_purchasable', 10, 2);	
 		// Add woocommerce tab
 		$this->loader->add_filter( 'woocommerce_product_tabs', $plugin_public, 'product_enquiry_tab' );

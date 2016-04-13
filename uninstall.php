@@ -10,5 +10,5 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
 
-delete_option( WC_CF7_PLUGIN_NAME );
-delete_option( WC_CF7_PLUGIN_NAME.'_css_js' );
+delete_option( "woocommerce-contact-form-7" );
+delete_option( "woocommerce-contact-form-7_css' );

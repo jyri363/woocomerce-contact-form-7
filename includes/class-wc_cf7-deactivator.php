@@ -12,7 +12,7 @@ class Wc_cf7_Deactivator {
 	 */
 	public static function deactivate() {
 		//delete_option( WC_CF7_PLUGIN_NAME );
-		//delete_option( WC_CF7_PLUGIN_NAME.'_css_js' );
+		//delete_option( WC_CF7_PLUGIN_NAME.'_css' );
 	}
 
 }

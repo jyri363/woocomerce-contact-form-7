@@ -3,9 +3,9 @@
  * Plugin Name: WooCommerce and Contact Form 7
  * Plugin URI: http://wpeesti.ee
  * Description: Additional Tab or Button Product Inquiry.
- * Author: J-J Kerem <jyri363@gmail.com>
+ * Author: JJK <jyri363@gmail.com>
  * Author URI: http://wpeesti.ee
- * Version: 1.0.4
+ * Version: 1.0.7 (Beta Versions)
  * Tested up to: 4.4.2
  *
  * License: GNU General Public License v3.0+
@@ -24,7 +24,7 @@
  **/
 if ( !defined( 'ABSPATH' ) ) exit;
  
-define( 'WC_CF7_VERSION', '1.0.3' );
+define( 'WC_CF7_VERSION', '1.0.7' );
 define( 'WC_CF7_PLUGIN', __FILE__ );
 define( 'WC_CF7_PLUGIN_BASENAME', plugin_basename( WC_CF7_PLUGIN ) );
 define( 'WC_CF7_PLUGIN_NAME', trim( dirname( WC_CF7_PLUGIN_BASENAME ), '/' ) );

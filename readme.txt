@@ -1,5 +1,5 @@
 === WooCommerce and Contact Form 7 ===
-Contributors: J.-J. Kerem
+Contributors: JJK
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=Z5Q67TUQKDEL6
 Tags: WooCommerce, Contact Form 7, Product Enquiry, Product Enquiry for WooCommerce and Contact Form 7, eCommerce Product Enquiry, Ask Question about a Product, WooCommerce Plugin, Contact Form 7 Plugin, Inquiry
 Stable tag: trunk
@@ -18,6 +18,9 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.html
 == Screenshots ==
 
 == Changelog ==
+
+= 1.0.5 (beta) =
+* Add loop button
 
 = 1.0.3 =
 * Add rename field
